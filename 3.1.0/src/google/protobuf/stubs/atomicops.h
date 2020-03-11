@@ -85,6 +85,9 @@ typedef int64 Atomic64;
 typedef int32 Atomic32;
 typedef intptr_t Atomic64;
 #endif
+#else
+typedef int32 Atomic32;
+typedef intptr_t Atomic64;
 #endif
 #endif
 
