@@ -72,7 +72,6 @@ typedef intptr_t Atomic32;
 typedef int64 Atomic64;
 #endif
 #else
-typedef int32 Atomic32;
 #ifdef GOOGLE_PROTOBUF_ARCH_64_BIT
 // We need to be able to go between Atomic64 and AtomicWord implicitly.  This
 // means Atomic64 and AtomicWord should be the same type on 64-bit.
@@ -80,8 +79,10 @@ typedef int32 Atomic32;
 // NaCl's intptr_t is not actually 64-bits on 64-bit!
 // http://code.google.com/p/nativeclient/issues/detail?id=1162
 // sparcv9's pointer type is 32bits
+typedef intptr_t Atomic32;
 typedef int64 Atomic64;
 #else
+typedef int32 Atomic32;
 typedef intptr_t Atomic64;
 #endif
 #endif
@@ -234,12 +235,6 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 // Unknown.
 #else
 #error GOOGLE_PROTOBUF_ATOMICOPS_ERROR
-#endif
-
-// On some platforms we need additional declarations to make AtomicWord
-// compatible with our other Atomic* types.
-#if defined(GOOGLE_PROTOBUF_OS_APPLE)
-#include <google/protobuf/stubs/atomicops_internals_atomicword_compat.h>
 #endif
 
 #undef GOOGLE_PROTOBUF_ATOMICOPS_ERROR
